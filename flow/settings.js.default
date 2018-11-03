@@ -1,0 +1,48 @@
+exports.keys = {
+    admin: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }],
+    users: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }],
+    requestors: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    },{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }],
+    verifiers: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    },{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }],
+    serviceProviders: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    },{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }],
+    tracetoWallet: [{
+        address: "<addr>",
+        priKey: "<prikey>"
+    }]
+}
+
+exports.values = {
+    "prContract": "",
+    "profileHash": "",
+    "consent": "",
+    "reason": "",
+    "result": "",
+    "decay": 0,
+    "expire": 0,
+    "rate": 10,
+    "topupCount": 0,
+    "keys": [""]
+}

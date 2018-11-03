@@ -1,0 +1,27 @@
+{
+  "name": "traceto-workflow-lib",
+  "version": "1.0.9",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tracetoio/tracetoio-workflow-lib.git"
+  },
+  "author": "tracetoio-team",
+  "license": "MIT",
+  "homepage": "https://docs.traceto.io",
+  "dependencies": {
+    "async": "^2.6.1",
+    "aws-sdk": "^2.332.0",
+    "sync-request": "^6.0.0",
+    "tracetoio-eth-lib": "^1.0.14",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
