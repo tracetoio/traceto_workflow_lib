@@ -5,7 +5,7 @@ const TTEntity = require('./TTEntity');
 class User extends TTEntity {
 	constructor(name, priKey) {
 		super(name, priKey);
-		this.ProfileContract = this.w3.addContract('Profile', environment.TraceToProfile.address, environment.TraceToProfile.abi);
+		this.ProfileContract = this.w3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
 		this.ServiceCreditContract = this.w3.addContract('ServiceCredit', environment.TraceToServiceCredit.address, environment.TraceToServiceCredit.abi);
 	}
 
