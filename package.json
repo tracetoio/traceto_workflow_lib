@@ -8,14 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/traceto_io_dias/utility_workflow.git"
-  },
-  "publishConfig": {
-    "registry": "https://nexus.traceto.io/repository/npm-local/"
+    "url": "git@github.com:tracetoio/tracetoio-eth-lib.git"
   },
   "author": "tracetoio-team",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/traceto_io_dias/utility_workflow#readme",
+  "license": "MIT",
+  "homepage": "https://docs.traceto.io",
   "dependencies": {
     "async": "^2.6.1",
     "aws-sdk": "^2.332.0",
