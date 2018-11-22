@@ -2,7 +2,7 @@ global.settings = require('./settings');
 const workflow = require('../index');
 
 environment.TraceToProfileResult.address = settings.values.prContract;
-// console.log([environment])
+console.log([environment])
 
 
 exports.initialize = function(outer_callback){
@@ -90,7 +90,7 @@ exports.rmiTopup = function(outer_callback){
 
 exports.setPending = function(outer_callback){
 	console.log("Set profile as pending:");
-	this.bob.setPendingForProfile(settings.values.profileHash, settings.values.consent, null)
+	this.bob.setPendingForProfile(settings.values.profileId, settings.values.consent, null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -99,7 +99,7 @@ exports.setPending = function(outer_callback){
 
 exports.setRMIPending = function(outer_callback){
 	console.log("Set profile as rmi pending:");
-	this.bob.setRMIPendingForProfile(settings.values.profileHash, null)
+	this.bob.setRMIPendingForProfile(settings.values.profileId, null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -109,7 +109,7 @@ exports.setRMIPending = function(outer_callback){
 
 exports.setResult = function(outer_callback){
 	console.log("Set profile result:");
-	this.carol.setResultForProfile(this.carolToBob, settings.values.profileHash, settings.values.result, settings.values.decay, settings.values.expire, null)
+	this.carol.setResultForProfile(this.carolToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire, null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -119,7 +119,7 @@ exports.setResult = function(outer_callback){
 
 exports.setRMIResult = function(outer_callback){
 	console.log("Set rmi profile result:");
-	this.dave.setResultForProfile(this.daveToBob, settings.values.profileHash, settings.values.result, settings.values.decay, settings.values.expire, null)
+	this.dave.setResultForProfile(this.daveToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire, null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -128,7 +128,7 @@ exports.setRMIResult = function(outer_callback){
 
 exports.getResult = function(outer_callback){
 	console.log("Get result:");
-	this.bob.getResultForProfile(settings.values.profileHash, this.dave.w3.getWalletAddress(), (err, res)=>{
+	this.bob.getResultForProfile(settings.values.profileId, this.dave.w3.getWalletAddress(), (err, res)=>{
 		if(!err){
 			console.log("    Done");
 			outer_callback();
@@ -138,7 +138,7 @@ exports.getResult = function(outer_callback){
 
 exports.setFinished = function(outer_callback){
 	console.log("Set profile as finished:");
-	this.bob.setFinishedForProfile(settings.values.profileHash, this.carol.w3.getWalletAddress(), null)
+	this.bob.setFinishedForProfile(settings.values.profileId, this.carol.w3.getWalletAddress(), null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -147,7 +147,7 @@ exports.setFinished = function(outer_callback){
 
 exports.setRMIFinished = function(outer_callback){
 	console.log("Set profile as rmi finished:");
-	this.bob.setRMIFinishedForProfile(settings.values.profileHash, this.dave.w3.getWalletAddress(), null)
+	this.bob.setRMIFinishedForProfile(settings.values.profileId, this.dave.w3.getWalletAddress(), null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -158,7 +158,7 @@ exports.setRMIFinished = function(outer_callback){
 
 exports.requestUnlock = function(outer_callback){
 	console.log("Request to Unlock Profile:");
-	this.bob.setUnlockForProfile(settings.values.profileHash, settings.values.reason, null)
+	this.bob.setUnlockForProfile(settings.values.profileId, settings.values.reason, null)
 	.then(function(receipt){
 		console.log("    Done");
 		outer_callback();
@@ -171,7 +171,7 @@ function shareKey(idx, callback){
 		callback();
 	}else{
 		console.log("    Sharing Key "+idx+":");
-		this.eve.shareKey(settings.values.profileHash, settings.values.keys[idx], environment.TraceToProfileResult.address, null)
+		this.eve.shareKey(settings.values.profileId, settings.values.keys[idx], environment.TraceToProfileResult.address, null)
 		.then(function(receipt){
 			console.log("       Done");
 			shareKey(idx+1, callback);
@@ -186,7 +186,7 @@ exports.shareUnlockKey = function(outer_callback){
 
 exports.getUnlockKey = function(outer_callback){
 	console.log("Request to Unlock Profile:");
-	this.bob.getProfileKeys(settings.values.profileHash, 0, (err, res)=>{
+	this.bob.getProfileKeys(settings.values.profileId, 0, (err, res)=>{
 		if(!err){
 			console.log(res);
 			console.log("    Done");

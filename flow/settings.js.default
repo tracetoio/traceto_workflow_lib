@@ -36,7 +36,7 @@ exports.keys = {
 
 exports.values = {
     "prContract": "",
-    "profileHash": "",
+    "profileId": 0,
     "consent": "",
     "reason": "",
     "result": "",

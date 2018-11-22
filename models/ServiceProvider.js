@@ -7,7 +7,7 @@ class ServiceProvider extends TTEntity {
 		super(name, priKey);
 		
 		this.ServiceCreditContract = this.w3.addContract('ServiceCredit', environment.TraceToServiceCredit.address, environment.TraceToServiceCredit.abi);
-		this.ProfileContract = this.w3.addContract('Profile', environment.TraceToProfile.address, environment.TraceToProfile.abi);
+		this.ProfileContract = this.w3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
 	}
 	addResultContract(name, addr){
 		return this.w3.addContract(name, addr, environment.TraceToProfileResult.abi);
@@ -15,11 +15,11 @@ class ServiceProvider extends TTEntity {
 	getPubKey(contractIdx, callback){
 		return this.w3.callContractbyIdx(contractIdx, "getPubKey", callback);
 	}
-	setResultForProfile(contractIdx, profileHash, result, decay, expire, callback){
-		return this.w3.sendToContractbyIdx(contractIdx, "setResult", this.gasPrice*4, callback, profileHash, result, decay, expire);
+	setResultForProfile(contractIdx, profileId, result, decay, expire, callback){
+		return this.w3.sendToContractbyIdx(contractIdx, "setResult", this.gasPrice*4, callback, profileId, result, decay, expire);
 	}
-	getProfileIPFS(profile, callback){
-		return this.w3.callContractbyIdx(this.ProfileContract, "getIPFSLink", callback, profile);
+	getProfile(profileId, callback){
+		return this.w3.callContractbyIdx(this.ProfileContract, "getProfile", callback, profileId);
 	}
 	getPendingEvents(){
 		return this.w3.getAllContractEventbyId(this.ServiceCreditContract);
