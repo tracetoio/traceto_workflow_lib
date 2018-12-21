@@ -1,8 +1,13 @@
 'use strict';
 
+let stage = 'app';
+
+if(process.env.NODE_ENV)
+  stage = process.env.NODE_ENV;
+
 const request = require('sync-request');
-const tokenUrl = 'https://s3-ap-southeast-1.amazonaws.com/contracts.traceto.io/dev/Token.environment.version_latest.json';
-const contractsUrl = 'https://s3-ap-southeast-1.amazonaws.com/contracts.traceto.io/dev/Contract.environment.version_latest.json';
+const tokenUrl = 'https://s3-ap-southeast-1.amazonaws.com/contracts.traceto.io/'+stage+'/Token.environment.version_latest.json';
+const contractsUrl = 'https://s3-ap-southeast-1.amazonaws.com/contracts.traceto.io/'+stage+'/Contract.environment.version_latest.json';
 
 let contracts = JSON.parse(request('GET', contractsUrl).getBody());
 contracts.TraceToContracts.push(JSON.parse(request('GET', tokenUrl).getBody()));
