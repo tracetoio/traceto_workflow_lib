@@ -9,27 +9,27 @@ const helper = require('./helper');
 * profile as KYC finished.
 */
 function startFlowTests(){
-	console.log("Flow started.")
-	async.waterfall([
-		helper.checkBalance,
-		helper.approveSCContract,
-		helper.topup,
-		helper.checkBalance,
-		helper.setPending,
-		helper.setResult,
-		helper.getResult,
-		helper.setFinished,
-		helper.checkBalance
-		],function(err, ...results) {
-			console.log(...results);
-		}
-	);
+  console.log('Flow started.');
+  async.waterfall([
+    helper.checkBalance,
+    helper.approveSCContract,
+    helper.topup,
+    helper.checkBalance,
+    helper.setPending,
+    helper.setResult,
+    helper.getResult,
+    helper.setFinished,
+    helper.checkBalance
+  ],function(err, ...results) {
+    console.log(...results);
+  }
+  );
 }
 
 async.waterfall([
-	helper.initialize,
-	startFlowTests
-	],function(err, ...results) {
-		console.log(...results);
-	}
+  helper.initialize,
+  startFlowTests
+],function(err, ...results) {
+  console.log(...results);
+}
 );
