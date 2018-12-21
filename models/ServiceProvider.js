@@ -21,8 +21,8 @@ class ServiceProvider extends TTEntity {
 	getProfile(profileId, callback){
 		return this.w3.callContractbyIdx(this.ProfileContract, "getProfile", callback, profileId);
 	}
-	getPendingEvents(){
-		return this.w3.getAllContractEventbyId(this.ServiceCreditContract);
+	getPendingEvents(fromBlock='latest'){
+		return this.w3.getAllContractEventbyId(this.ServiceCreditContract, fromBlock);
 	}
 	sign(msg){
 		return this.w3.sign(msg);

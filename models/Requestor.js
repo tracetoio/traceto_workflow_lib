@@ -69,8 +69,8 @@ class Requestor extends TTEntity {
 	emitRMIForProfile(profileId, callback){
 		return this.w3.sendToContractbyIdx(this.ProfileResultContract, "emitRMI", this.gasPrice*4, callback, profileId);
 	}
-	getResultEvents(){
-		return this.w3.getAllContractEventbyId(this.ProfileResultContract);
+	getResultEvents(fromBlock='latest'){
+		return this.w3.getAllContractEventbyId(this.ProfileResultContract, fromBlock);
 	}
 	getKYCTokens(profileId, callback){
 		return this.w3.callContractbyIdx(this.ProfileContract, "getProfileKYCs", callback, profileId);

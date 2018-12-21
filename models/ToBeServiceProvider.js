@@ -13,8 +13,8 @@ class ToBeServiceProvider extends TTEntity {
 	getStatus(callback){
 		return this.w3.callContractbyIdx(this.SPListContract, "isSP", callback, this.w3.getWalletAddress());
 	}
-	getRequestorEvents(){
-		return this.w3.getAllContractEventbyId(this.SPListContract);
+	getRequestorEvents(fromBlock='latest'){
+		return this.w3.getAllContractEventbyId(this.SPListContract, fromBlock);
 	}
 }
 
