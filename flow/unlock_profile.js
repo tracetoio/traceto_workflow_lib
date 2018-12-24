@@ -13,24 +13,24 @@ const helper = require('./helper');
 */
 
 function startFlowTests(){
-	console.log("Flow started.")
-	//create our users
-	async.waterfall([
-		helper.checkBalance,
-		helper.checkRMIBalance,
-		helper.requestUnlock,
-		helper.shareUnlockKey,
-		helper.getUnlockKey
-		],function(err, ...results) {
-			console.log(...results);
-		}
-	);
+  console.log('Flow started.');
+  //create our users
+  async.waterfall([
+    helper.checkBalance,
+    helper.checkRMIBalance,
+    helper.requestUnlock,
+    helper.shareUnlockKey,
+    helper.getUnlockKey
+  ],function(err, ...results) {
+    console.log(...results);
+  }
+  );
 }
 
 async.waterfall([
-	helper.initialize,
-	startFlowTests
-	],function(err, ...results) {
-		console.log(...results);
-	}
+  helper.initialize,
+  startFlowTests
+],function(err, ...results) {
+  console.log(...results);
+}
 );
