@@ -15,8 +15,8 @@ class ToBeRequestor extends TTEntity {
 		return this.w3.callContractbyIdx(this.RequestorList, "isRequestorPR", callback, this.w3.getWalletAddress());
 	}
 
-	getRequestorEvents(){
-		return this.w3.getAllContractEventbyId(this.RequestorList);
+	getRequestorEvents(fromBlock='latest'){
+		return this.w3.getAllContractEventbyId(this.RequestorList, fromBlock);
 	}
 }
 

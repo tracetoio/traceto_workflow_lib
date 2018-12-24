@@ -13,19 +13,19 @@ class User extends TTEntity {
 		return this.w3.addContract(name, addr, environment.TraceToProfileResult.abi);
 	}
 
-	getShareProfileEvents(contractIdx){
+	getShareProfileEvents(contractIdx, fromBlock='latest'){
 		//Consent and resultSet
-		return this.w3.getAllContractEventbyId(contractIdx);
+		return this.w3.getAllContractEventbyId(contractIdx, fromBlock);
 	}
 
-	getProfileEvents(){
+	getProfileEvents(fromBlock='latest'){
 		//SetProfile event
-		return this.w3.getAllContractEventbyId(this.ProfileContract);
+		return this.w3.getAllContractEventbyId(this.ProfileContract, fromBlock);
 	}
 
-	getProfileStatusEvents(){
+	getProfileStatusEvents(fromBlock='latest'){
 		//Topup, Pending, Finished events
-		return this.w3.getAllContractEventbyId(this.ServiceCreditContract);
+		return this.w3.getAllContractEventbyId(this.ServiceCreditContract, fromBlock);
 	}
 }
 
