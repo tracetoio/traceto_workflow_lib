@@ -35,7 +35,10 @@ class TTEntity {
     this.gasPrice = _gasPrice;
   }
   approveToken(receiver, amount, callback) {
-    return this.w3.sendToContractbyIdx(this.t2tContract, 'approve', this.gasPrice*4, callback, receiver, amount);
+    let httpw3 = new tracetoWeb3(this.httpProvider);
+    httpw3.setWallet(this.priKey);
+    let t2tContract = httpw3.addContract('t2t', environment.TraceToToken.address, environment.TraceToToken.abi);
+    return httpw3.sendToContractbyIdx(t2tContract, 'approve', this.gasPrice*4, callback, receiver, amount);
   }
 }
 
