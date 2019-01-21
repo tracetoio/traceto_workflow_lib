@@ -20,7 +20,7 @@ class Verifier extends TTEntity {
   shareKey(profileHash, keyPiece, requestor, callback){
     let httpw3 = new tracetoWeb3(this.httpProvider);
     httpw3.setWallet(this.priKey);
-    let unlockProfileContract = this.w3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
+    let unlockProfileContract = httpw3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
     return httpw3.sendToContractbyIdx(unlockProfileContract, 'setKey', this.gasPrice*4, callback, profileHash, keyPiece, requestor);
   }
 
