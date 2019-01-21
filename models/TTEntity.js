@@ -35,6 +35,7 @@ class TTEntity {
     this.gasPrice = _gasPrice;
   }
   approveToken(receiver, amount, callback) {
+    //Creating a new instance of httpw3 provider to ensure that there is a connection.
     const httpw3 = new tracetoWeb3(this.httpProvider);
     httpw3.setWallet(this.priKey);
     const t2tContract = httpw3.addContract('t2t', environment.TraceToToken.address, environment.TraceToToken.abi);
