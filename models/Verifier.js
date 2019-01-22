@@ -2,6 +2,8 @@
 
 const TTEntity = require('./TTEntity');
 
+const tracetoWeb3 = require('tracetoio-eth-lib');
+
 class Verifier extends TTEntity {
   constructor(name, priKey, threshold) {
     super(name, priKey);
