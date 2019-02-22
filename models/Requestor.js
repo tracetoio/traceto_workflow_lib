@@ -78,6 +78,9 @@ class Requestor extends TTEntity {
   getKYCTokenData(kycId, callback){
     return this.w3.callContractbyIdx(this.ProfileContract, 'getKYC', callback, kycId);
   }
+  getProfileCount(user, callback){
+    return this.w3.callContractbyIdx(this.ProfileContract, 'getUserProfileTokenCount', callback, user);
+  }
   sign(msg){
     return this.w3.sign(msg);
   }
