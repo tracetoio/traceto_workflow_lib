@@ -10,10 +10,7 @@ class RMIServiceProvider extends TTEntity {
   }
   addResultContract(name, addr){
     const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.addContract(name, addr, environment.TraceToProfileResult.abi)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.addContract(name, addr, environment.TraceToProfileResult.abi);
   }
   getPubKey(contractIdx){
     const _this = this;
