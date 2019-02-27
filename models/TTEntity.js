@@ -34,12 +34,16 @@ class TTEntity {
   updateGasPrice(_gasPrice){
     this.gasPrice = _gasPrice;
   }
-  approveToken(receiver, amount, callback) {
-    //Creating a new instance of httpw3 provider to ensure that there is a connection.
-    const httpw3 = new tracetoWeb3(this.httpProvider);
-    httpw3.setWallet(this.priKey);
-    const t2tContract = httpw3.addContract('t2t', environment.TraceToToken.address, environment.TraceToToken.abi);
-    return httpw3.sendToContractbyIdx(t2tContract, 'approve', this.gasPrice*4, callback, receiver, amount);
+  approveToken(receiver, amount) {
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      //Creating a new instance of httpw3 provider to ensure that there is a connection.
+      const httpw3 = new tracetoWeb3(_this.httpProvider);
+      httpw3.setWallet(_this.priKey);
+      const t2tContract = httpw3.addContract('t2t', environment.TraceToToken.address, environment.TraceToToken.abi);
+      httpw3.sendToContractbyIdx(t2tContract, 'approve', _this.gasPrice*4, receiver, amount)
+      .then(data => resolve(data), reason => reject(reason));
+    })
   }
 }
 
