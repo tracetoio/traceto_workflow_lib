@@ -11,26 +11,13 @@ const helper = require('./helper');
 * public key, and then requestor can read it, decrypt it and combine
 * into the original key.
 */
-
-function startFlowTests(){
-  console.log('Flow started.');
-  //create our users
-  async.waterfall([
-    helper.checkBalance,
-    helper.checkRMIBalance,
-    helper.requestUnlock,
-    helper.shareUnlockKey,
-    helper.getUnlockKey
-  ],function(err, ...results) {
-    console.log(...results);
-  }
-  );
+async function startFlow(){
+  await helper.initialize();
+  await helper.checkBalance();
+  await helper.checkRMIBalance();
+  await helper.requestUnlock();
+  await helper.shareUnlockKey();
+  await helper.getUnlockKey();
 }
 
-async.waterfall([
-  helper.initialize,
-  startFlowTests
-],function(err, ...results) {
-  console.log(...results);
-}
-);
+startFlow();
