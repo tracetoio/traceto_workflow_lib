@@ -1,6 +1,6 @@
 {
   "name": "traceto-workflow-lib",
-  "version": "1.0.25",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "async": "^2.6.1",
     "aws-sdk": "^2.332.0",
     "sync-request": "^6.0.0",
-    "tracetoio-eth-lib": "^1.0.20",
+    "tracetoio-eth-lib": "^1.1.0",
     "web3": "^1.0.0-beta.36"
   },
   "devDependencies": {
