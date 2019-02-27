@@ -7,11 +7,19 @@ class ToBeRMIServiceProvider extends TTEntity {
     super(name, priKey);
     this.SPListContract = this.w3.addContract('ServiceProviderList', environment.TraceToRMISPList.address, environment.TraceToRMISPList.abi);
   }
-  apply(ratePerService, reputation, companyName, email, uriForRubrics, hashFroRubrics, callback){
-    return this.w3.sendToContractbyIdx(this.SPListContract, 'addPendingSP', this.gasPrice*4, callback, this.w3.getWalletAddress(), ratePerService, reputation, companyName, email, uriForRubrics, hashFroRubrics);
+  apply(ratePerService, reputation, companyName, email, uriForRubrics, hashFroRubrics){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.SPListContract, 'addPendingSP', _this.gasPrice*4, _this.w3.getWalletAddress(), ratePerService, reputation, companyName, email, uriForRubrics, hashFroRubrics)
+        .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getStatus(callback){
-    return this.w3.callContractbyIdx(this.SPListContract, 'isSP', callback, this.w3.getWalletAddress());
+  getStatus(){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.SPListContract, 'isSP', _this.w3.getWalletAddress())
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
   getRequestorEvents(fromBlock='latest'){
     return this.w3.getAllContractEventbyId(this.SPListContract, fromBlock);

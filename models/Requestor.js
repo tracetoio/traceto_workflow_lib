@@ -142,11 +142,7 @@ class Requestor extends TTEntity {
     });
   }
   getResultEvents(fromBlock='latest'){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.getAllContractEventbyId(_this.ProfileResultContract, fromBlock)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.getAllContractEventbyId(this.ProfileResultContract, fromBlock);
   }
   getKYCTokens(profileId){
     const _this = this;

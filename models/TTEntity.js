@@ -43,7 +43,7 @@ class TTEntity {
       const t2tContract = httpw3.addContract('t2t', environment.TraceToToken.address, environment.TraceToToken.abi);
       httpw3.sendToContractbyIdx(t2tContract, 'approve', _this.gasPrice*4, receiver, amount)
       .then(data => resolve(data), reason => reject(reason));
-    })
+    });
   }
 }
 

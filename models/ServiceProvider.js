@@ -10,16 +10,32 @@ class ServiceProvider extends TTEntity {
     this.ProfileContract = this.w3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
   }
   addResultContract(name, addr){
-    return this.w3.addContract(name, addr, environment.TraceToProfileResult.abi);
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.addContract(name, addr, environment.TraceToProfileResult.abi)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getPubKey(contractIdx, callback){
-    return this.w3.callContractbyIdx(contractIdx, 'getPubKey', callback);
+  getPubKey(contractIdx){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(contractIdx, 'getPubKey')
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  setResultForProfile(contractIdx, profileId, result, decay, expire, callback){
-    return this.w3.sendToContractbyIdx(contractIdx, 'setResult', this.gasPrice*4, callback, profileId, result, decay, expire);
+  setResultForProfile(contractIdx, profileId, result, decay, expire){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(contractIdx, 'setResult', _this.gasPrice*4, profileId, result, decay, expire)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getProfile(profileId, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getProfile', callback, profileId);
+  getProfile(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getProfile', profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
   getPendingEvents(fromBlock='latest'){
     return this.w3.getAllContractEventbyId(this.ServiceCreditContract, fromBlock);
