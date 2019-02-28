@@ -126,20 +126,15 @@ exports.requestUnlock = async function(){
   console.log(data.transactionHash);
 };
 
-async function shareKey(idx, callback){
-  if(idx > 10){
-    console.log('Key Sharing Done');
-    callback();
-  }else{
-    console.log('Sharing Key '+idx+':');
-    let data = await this.eve.shareKey(settings.values.profileId, settings.values.keys[idx], environment.TraceToProfileResult.address)
-    console.log(data.transactionHash);
-  }
-}
+
 
 exports.shareUnlockKey = async function(){
   console.log('Share the Unlock Profile:');
-  shareKey(0, );
+  for(let i = 0; i < 10; i++){
+    console.log('Sharing Key '+i+':');
+    let data = await this.eve.shareKey(settings.values.profileId, settings.values.keys[i], environment.TraceToProfileResult.address)
+    console.log(data.transactionHash);
+  }
 };
 
 exports.getUnlockKey = async function(){
