@@ -8,16 +8,22 @@ const helper = require('./helper');
 * profile as KYC finished.
 */
 async function startFlow(){
-  await helper.initialize();
-  await helper.checkBalance();
-  await helper.approveSCContract();
-  await helper.topup();
-  await helper.checkBalance();
-  await helper.setPending();
-  await helper.setResult();
-  await helper.getResult();
-  await helper.setFinished();
-  await helper.checkBalance();
+  try{
+    await helper.initialize();
+    await helper.checkBalance();
+    await helper.approveSCContract();
+    await helper.topup();
+    await helper.checkBalance();
+    await helper.setPending();
+    await helper.setResult();
+    await helper.getResult();
+    await helper.setFinished();
+    await helper.checkBalance();
+    process.exit(0);
+  }catch(err){
+    console.error(err);
+    process.exit(1);
+  }
 }
 
 startFlow();

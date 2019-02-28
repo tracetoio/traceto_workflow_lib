@@ -12,12 +12,18 @@ const helper = require('./helper');
 * into the original key.
 */
 async function startFlow(){
-  await helper.initialize();
-  await helper.checkBalance();
-  await helper.checkRMIBalance();
-  await helper.requestUnlock();
-  await helper.shareUnlockKey();
-  await helper.getUnlockKey();
+  try{
+    await helper.initialize();
+    await helper.checkBalance();
+    await helper.checkRMIBalance();
+    await helper.requestUnlock();
+    await helper.shareUnlockKey();
+    await helper.getUnlockKey();
+  process.exit(0);
+  }catch(err){
+    console.error(err);
+    process.exit(1);
+  }
 }
 
 startFlow();

@@ -41,7 +41,8 @@ exports.checkBalance = async function(){
 exports.checkRMIBalance = async function(){
   console.log('Checking rmi balance:');
   let data = await this.bob.getRMIBalance(this.dave.w3.getWalletAddress());
-  console.log(data);
+  console.log("tokenCount  ", data.tokenCount);
+  console.log("serviceCount", data.serviceCount);
 };
 
 exports.approveSCContract = async function() {
@@ -96,9 +97,16 @@ exports.setRMIResult = async function(){
 
 exports.getResult = async function(){
   console.log('Get result:');
-  let data = await this.bob.getResultForProfile(settings.values.profileId, this.dave.w3.getWalletAddress());
-  console.log(data.transactionHash);
+  let data = await this.bob.getResultForProfile(settings.values.profileId, this.carol.w3.getWalletAddress());
+  console.log(data);
 };
+
+exports.getRMIResult = async function(){
+  console.log('Get RMI result:');
+  let data = await this.bob.getRMIResultForProfile(settings.values.profileId, this.dave.w3.getWalletAddress());
+  console.log(data);
+};
+
 
 exports.setFinished = async function(){
   console.log('Set profile as finished:');
