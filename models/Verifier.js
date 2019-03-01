@@ -12,30 +12,52 @@ class Verifier extends TTEntity {
     this.UnlockProfileContract = this.w3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
   }
 
-  addProfile(user, profile, ipfs, callback){
-    const httpw3 = new tracetoWeb3(this.httpProvider);
-    httpw3.setWallet(this.priKey);
-    const profileContract = httpw3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
-    return httpw3.sendToContractbyIdx(profileContract, 'assignProfileToken', this.gasPrice*4, callback, user, profile, ipfs);
+  addProfile(user, profile, ipfs){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      //Creating a new instance of httpw3 provider to ensure that there is a connection.
+      const httpw3 = new tracetoWeb3(_this.httpProvider);
+      httpw3.setWallet(_this.priKey);
+      const profileContract = httpw3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
+      httpw3.sendToContractbyIdx(profileContract, 'assignProfileToken', _this.gasPrice*4, user, profile, ipfs)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
 
-  shareKey(profileHash, keyPiece, requestor, callback){
-    const httpw3 = new tracetoWeb3(this.httpProvider);
-    httpw3.setWallet(this.priKey);
-    const unlockProfileContract = httpw3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
-    return httpw3.sendToContractbyIdx(unlockProfileContract, 'setKey', this.gasPrice*4, callback, profileHash, keyPiece, requestor);
+  shareKey(profileHash, keyPiece, requestor){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      //Creating a new instance of httpw3 provider to ensure that there is a connection.
+      const httpw3 = new tracetoWeb3(_this.httpProvider);
+      httpw3.setWallet(_this.priKey);
+      const unlockProfileContract = httpw3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
+      httpw3.sendToContractbyIdx(unlockProfileContract, 'setKey', _this.gasPrice*4, profileHash, keyPiece, requestor)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
 
-  getProfileCount(user, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getUserProfileTokenCount', callback, user);
+  getProfileCount(user){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getUserProfileTokenCount', user)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
 
-  getProfileContractOwner(callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'owner', callback);
+  getProfileContractOwner(){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'owner')
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
 
-  getUnlockProfileReason(profileHash, requestor, callback){
-    return this.w3.callContractbyIdx(this.UnlockProfileContract, 'getReason', callback, profileHash, requestor);  
+  getUnlockProfileReason(profileHash, requestor){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.UnlockProfileContract, 'getReason', profileHash, requestor)
+      .then(data => resolve(data), reason => reject(reason));
+    });  
   }
 }
 

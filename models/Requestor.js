@@ -15,73 +15,158 @@ class Requestor extends TTEntity {
     this.RMIServiceCreditContract = this.w3.addContract('ServiceCredit', environment.TraceToRMIServiceCredit.address, environment.TraceToRMIServiceCredit.abi);
     this.UnlockProfileContract = this.w3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);
   }
-  getProfile(profileId, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getProfile', callback, profileId);
+  getProfile(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getProfile', profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getSPList(callback){
-    return this.w3.callContractbyIdx(this.SPListContract, 'getSPList', callback);
+  getSPList(){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.SPListContract, 'getSPList')
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getRMISPList(callback){
-    return this.w3.callContractbyIdx(this.RMISPListContract, 'getSPList', callback);
+  getRMISPList(){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.RMISPListContract, 'getSPList')
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  topup(sp, count, callback){
-    return this.w3.sendToContractbyIdx(this.ServiceCreditContract, 'topup', this.gasPrice*4, callback, this.prContract, sp, count);
+  topup(sp, count){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ServiceCreditContract, 'topup', _this.gasPrice*4, _this.prContract, sp, count)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  topupRMI(sp, count, callback){
-    return this.w3.sendToContractbyIdx(this.RMIServiceCreditContract, 'topup', this.gasPrice*4, callback, this.prContract, sp, count);
+  topupRMI(sp, count){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.RMIServiceCreditContract, 'topup', _this.gasPrice*4, _this.prContract, sp, count)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  assignKYCToken(profile, result, decay, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'assignKYCToken', this.gasPrice*4, callback, profile, result, decay);
+  assignKYCToken(profile, result, decay){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'assignKYCToken', _this.gasPrice*4, profile, result, decay)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getBalance(sp, callback){
-    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getServiceBalance', callback, sp);
+  getBalance(sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getServiceBalance', sp)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getRMIBalance(sp, callback){
-    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getRMIServiceBalance', callback, sp); 
+  getRMIBalance(sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getRMIServiceBalance',sp)
+      .then(data => resolve(data), reason => reject(reason)); 
+    });
   }
-  setPendingForProfile(profileId, consent, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'addPending', this.gasPrice*4, callback, profileId, consent);
+  setPendingForProfile(profileId, consent){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'addPending', _this.gasPrice*4, profileId, consent)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  setRMIPendingForProfile(profileId, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'addRMIPending', this.gasPrice*4, callback, profileId);
+  setRMIPendingForProfile(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'addRMIPending', _this.gasPrice*4, profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getResultForProfile(profileId, sp, callback){
-    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getResult', callback, profileId, sp);
+  getResultForProfile(profileId, sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getResult', profileId, sp)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getRMIResultForProfile(profileId, sp, callback){
-    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getRMIResult', callback, profileId, sp);
+  getRMIResultForProfile(profileId, sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getRMIResult', profileId, sp)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  setFinishedForProfile(profileId, sp, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'setFinished', this.gasPrice*4, callback, profileId, sp);
+  setFinishedForProfile(profileId, sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'setFinished', _this.gasPrice*4, profileId, sp)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  setRMIFinishedForProfile(profileId, sp, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'setRMIFinished', this.gasPrice*4, callback, profileId, sp);
+  setRMIFinishedForProfile(profileId, sp){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'setRMIFinished', _this.gasPrice*4, profileId, sp)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  setUnlockForProfile(profileId, reason, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'requestProfileKey', this.gasPrice*4, callback, profileId, reason);
+  setUnlockForProfile(profileId, reason){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'requestProfileKey', _this.gasPrice*4, profileId, reason)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getProfileKeys(profileId, idx, callback){
-    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getProfileKey', callback, profileId, idx);
+  getProfileKeys(profileId, idx){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getProfileKey', profileId, idx)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  emitRENEWForProfile(profileId, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'emitRENEW', this.gasPrice*4, callback, profileId);
+  emitRENEWForProfile(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'emitRENEW', _this.gasPrice*4, profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  emitRMIForProfile(profileId, callback){
-    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'emitRMI', this.gasPrice*4, callback, profileId);
+  emitRMIForProfile(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'emitRMI', _this.gasPrice*4, profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
   getResultEvents(fromBlock='latest'){
     return this.w3.getAllContractEventbyId(this.ProfileResultContract, fromBlock);
   }
-  getKYCTokens(profileId, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getProfileKYCs', callback, profileId);
+  getKYCTokens(profileId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getProfileKYCs', profileId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getKYCTokenData(kycId, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getKYC', callback, kycId);
+  getKYCTokenData(kycId){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getKYC', kycId)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
-  getProfileCount(user, callback){
-    return this.w3.callContractbyIdx(this.ProfileContract, 'getUserProfileTokenCount', callback, user);
+  getProfileCount(user){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getUserProfileTokenCount', user)
+      .then(data => resolve(data), reason => reject(reason));
+    });
   }
   sign(msg){
+    const _this = this;
     return this.w3.sign(msg);
   }
 }
