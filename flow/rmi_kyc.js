@@ -1,3 +1,5 @@
+const async = require('async');
+
 const helper = require('./helper');
 
 /*
@@ -9,32 +11,36 @@ const helper = require('./helper');
 * pending after he finished the normal KYC, wait for the rmi result to be
 * set by RMI service provider, and set the RMI process is finished.
 */
-async function startFlow(){
-  try{
-    await helper.initialize();
-    await helper.checkBalance();
-    await helper.checkRMIBalance();
-    await helper.approveSCContract();
-    await helper.topup();
-    await helper.approveRMISCContract();
-    await helper.rmiTopup();
-    await helper.checkBalance();
-    await helper.checkRMIBalance();
-    await helper.setPending();
-    await helper.setResult();
-    await helper.getResult();
-    await helper.setFinished();
-    await helper.setRMIPending();
-    await helper.setRMIResult();
-    await helper.getRMIResult();
-    await helper.setRMIFinished();
-    await helper.checkBalance();
-    await helper.checkRMIBalance();
-    process.exit(0);
-  }catch(err){
-    console.error(err);
-    process.exit(1);
+function startFlowTests(){
+  console.log('Flow started.');
+  //create our users
+  async.waterfall([
+    helper.checkBalance,
+    helper.checkRMIBalance,
+    helper.approveSCContract,
+    helper.topup,
+    helper.approveRMISCContract,
+    helper.rmiTopup,
+    helper.checkBalance,
+    helper.checkRMIBalance,
+    helper.setPending,
+    helper.setResult,
+    helper.setFinished,
+    helper.setRMIPending,
+    helper.setRMIResult,
+    helper.setRMIFinished,
+    helper.checkBalance,
+    helper.checkRMIBalance
+  ],function(err, ...results) {
+    console.log(...results);
   }
+  );
 }
 
-startFlow();
+async.waterfall([
+  helper.initialize,
+  startFlowTests
+],function(err, ...results) {
+  console.log(...results);
+}
+);

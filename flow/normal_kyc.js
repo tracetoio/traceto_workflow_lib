@@ -1,3 +1,4 @@
+const async = require('async');
 const helper = require('./helper');
 
 /*
@@ -7,23 +8,28 @@ const helper = require('./helper');
 * pending, wait the service provider to set KYC result, and then set the 
 * profile as KYC finished.
 */
-async function startFlow(){
-  try{
-    await helper.initialize();
-    await helper.checkBalance();
-    await helper.approveSCContract();
-    await helper.topup();
-    await helper.checkBalance();
-    await helper.setPending();
-    await helper.setResult();
-    await helper.getResult();
-    await helper.setFinished();
-    await helper.checkBalance();
-    process.exit(0);
-  }catch(err){
-    console.error(err);
-    process.exit(1);
+function startFlowTests(){
+  console.log('Flow started.');
+  async.waterfall([
+    helper.checkBalance,
+    helper.approveSCContract,
+    helper.topup,
+    helper.checkBalance,
+    helper.setPending,
+    helper.setResult,
+    helper.getResult,
+    helper.setFinished,
+    helper.checkBalance
+  ],function(err, ...results) {
+    console.log(...results);
   }
+  );
 }
 
-startFlow();
+async.waterfall([
+  helper.initialize,
+  startFlowTests
+],function(err, ...results) {
+  console.log(...results);
+}
+);

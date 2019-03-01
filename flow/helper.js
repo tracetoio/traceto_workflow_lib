@@ -3,7 +3,7 @@ const workflow = require('../index');
 
 environment.TraceToProfileResult.address = settings.values.prContract;
 
-exports.initialize = async function(){
+exports.initialize = function(outerCallback){
   console.log('Initialize started.');
   /*
   * Alice is an end user.
@@ -21,123 +21,172 @@ exports.initialize = async function(){
   this.carolToBob = this.carol.addResultContract('Bob', environment.TraceToProfileResult.address);
   this.daveToBob = this.dave.addResultContract('Bob', environment.TraceToProfileResult.address);
   
-  let gasPrice = await this.alice.getGasPrice();
-  this.alice.updateGasPrice(gasPrice);
-  this.bob.updateGasPrice(gasPrice);
-  this.carol.updateGasPrice(gasPrice);
-  this.dave.updateGasPrice(gasPrice);
-  this.eve.updateGasPrice(gasPrice);
-  console.log('Initialize finished.');
+  this.alice.getGasPrice().then(gasPrice => {
+    this.alice.updateGasPrice(gasPrice);
+    this.bob.updateGasPrice(gasPrice);
+    this.carol.updateGasPrice(gasPrice);
+    this.dave.updateGasPrice(gasPrice);
+    this.eve.updateGasPrice(gasPrice);
+    console.log('Initialize finished.');
+    outerCallback();
+  });
 };
 
-exports.checkBalance = async function(){
+exports.checkBalance = function(outerCallback){
   console.log('Checking balance:');
-  let data = await this.bob.getBalance(this.carol.w3.getWalletAddress());
-  console.log("tokenCount  ", data.tokenCount);
-  console.log("serviceCount", data.serviceCount);
+  this.bob.getBalance(this.carol.w3.getWalletAddress(), function(err, res){
+    console.log('    token balance: ', res.tokenCount);
+    console.log('    service balance: ', res.serviceCount);
+    outerCallback();
+  });
 };
 
-exports.checkRMIBalance = async function(){
+exports.checkRMIBalance = function(outerCallback){
   console.log('Checking rmi balance:');
-  let data = await this.bob.getRMIBalance(this.dave.w3.getWalletAddress());
-  console.log("tokenCount  ", data.tokenCount);
-  console.log("serviceCount", data.serviceCount);
+  this.bob.getRMIBalance(this.dave.w3.getWalletAddress(), function(err, res){
+    console.log('    rmi token balance: ', res.tokenCount);
+    console.log('    rmi service balance: ', res.serviceCount);
+    outerCallback();
+  });
 };
 
-exports.approveSCContract = async function() {
+exports.approveSCContract = function(outerCallback) {
   console.log('Approving T2T:');
-  let data = await this.bob.approveToken(environment.TraceToServiceCredit.address, settings.values.rate*settings.values.topupCount);
-  console.log(data.transactionHash);
+  this.bob.approveToken(environment.TraceToServiceCredit.address, settings.values.rate*settings.values.topupCount, null)
+  .then(function(receipt){
+    console.log('    Approvd '+receipt);
+    outerCallback();
+  });
 };
 
-exports.approveRMISCContract = async function() {
+exports.approveRMISCContract = function(outerCallback) {
   console.log('Approving T2T:');
-  let data = await this.bob.approveToken(environment.TraceToRMIServiceCredit.address, settings.values.rate*settings.values.topupCount)
-  console.log(data.transactionHash);
+  this.bob.approveToken(environment.TraceToRMIServiceCredit.address, settings.values.rate*settings.values.topupCount, null)
+  .then(function(receipt){
+    console.log('    Approvd '+receipt);
+    outerCallback();
+  });
 };
 
-exports.topup = async function(){
+exports.topup = function(outerCallback){
   console.log('Top up balance:');
-  let data = await this.bob.topup(this.carol.w3.getWalletAddress(), settings.values.topupCount)
-  console.log(data.transactionHash);
+  this.bob.topup(this.carol.w3.getWalletAddress(), settings.values.topupCount, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.rmiTopup = async function(){
+exports.rmiTopup = function(outerCallback){
   console.log('Top up rmi balance:');
-  let data = await this.bob.topupRMI(this.dave.w3.getWalletAddress(), settings.values.topupCount)
-  console.log(data.transactionHash);
+  this.bob.topupRMI(this.dave.w3.getWalletAddress(), settings.values.topupCount, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.setPending = async function(){
+exports.setPending = function(outerCallback){
   console.log('Set profile as pending:');
-  let data = await this.bob.setPendingForProfile(settings.values.profileId, settings.values.consent)
-  console.log(data.transactionHash);
+  this.bob.setPendingForProfile(settings.values.profileId, settings.values.consent, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.setRMIPending = async function(){
+exports.setRMIPending = function(outerCallback){
   console.log('Set profile as rmi pending:');
-  let data = await this.bob.setRMIPendingForProfile(settings.values.profileId)
-  console.log(data.transactionHash);
+  this.bob.setRMIPendingForProfile(settings.values.profileId, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
 
-exports.setResult = async function(){
+exports.setResult = function(outerCallback){
   console.log('Set profile result:');
-  let data = await this.carol.setResultForProfile(this.carolToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire)
-  console.log(data.transactionHash);
+  this.carol.setResultForProfile(this.carolToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
 
-exports.setRMIResult = async function(){
+exports.setRMIResult = function(outerCallback){
   console.log('Set rmi profile result:');
-  let data = await this.dave.setResultForProfile(this.daveToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire)
-  console.log(data.transactionHash);
+  this.dave.setResultForProfile(this.daveToBob, settings.values.profileId, settings.values.result, settings.values.decay, settings.values.expire, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.getResult = async function(){
+exports.getResult = function(outerCallback){
   console.log('Get result:');
-  let data = await this.bob.getResultForProfile(settings.values.profileId, this.carol.w3.getWalletAddress());
-  console.log(data);
+  this.bob.getResultForProfile(settings.values.profileId, this.dave.w3.getWalletAddress(), (err, res)=>{
+    if(!err){
+      console.log('    Done '+res);
+      outerCallback();
+    }
+  });
 };
 
-exports.getRMIResult = async function(){
-  console.log('Get RMI result:');
-  let data = await this.bob.getRMIResultForProfile(settings.values.profileId, this.dave.w3.getWalletAddress());
-  console.log(data);
-};
-
-
-exports.setFinished = async function(){
+exports.setFinished = function(outerCallback){
   console.log('Set profile as finished:');
-  let data = await this.bob.setFinishedForProfile(settings.values.profileId, this.carol.w3.getWalletAddress())
-  console.log(data.transactionHash);
+  this.bob.setFinishedForProfile(settings.values.profileId, this.carol.w3.getWalletAddress(), null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.setRMIFinished = async function(){
+exports.setRMIFinished = function(outerCallback){
   console.log('Set profile as rmi finished:');
-  let data = await this.bob.setRMIFinishedForProfile(settings.values.profileId, this.dave.w3.getWalletAddress())
-  console.log(data.transactionHash);
+  this.bob.setRMIFinishedForProfile(settings.values.profileId, this.dave.w3.getWalletAddress(), null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-exports.requestUnlock = async function(){
+exports.requestUnlock = function(outerCallback){
   console.log('Request to Unlock Profile:');
-  let data = await this.bob.setUnlockForProfile(settings.values.profileId, settings.values.reason)
-  console.log(data.transactionHash);
+  this.bob.setUnlockForProfile(settings.values.profileId, settings.values.reason, null)
+  .then(function(receipt){
+    console.log('    Done '+receipt);
+    outerCallback();
+  });
 };
 
-
-
-exports.shareUnlockKey = async function(){
-  console.log('Share the Unlock Profile:');
-  for(let i = 0; i < 10; i++){
-    console.log('Sharing Key '+i+':');
-    let data = await this.eve.shareKey(settings.values.profileId, settings.values.keys[i], environment.TraceToProfileResult.address)
-    console.log(data.transactionHash);
+function shareKey(idx, callback){
+  if(idx > 10){
+    console.log('    Key Sharing Done');
+    callback();
+  }else{
+    console.log('    Sharing Key '+idx+':');
+    this.eve.shareKey(settings.values.profileId, settings.values.keys[idx], environment.TraceToProfileResult.address, null)
+    .then(function(receipt){
+      console.log('       Done '+receipt);
+      shareKey(idx+1, callback);
+    });
   }
+}
+
+exports.shareUnlockKey = function(outerCallback){
+  console.log('Share the Unlock Profile:');
+  shareKey(0, outerCallback);
 };
 
-exports.getUnlockKey = async function(){
+exports.getUnlockKey = function(outerCallback){
   console.log('Request to Unlock Profile:');
-  let data = await this.bob.getProfileKeys(settings.values.profileId, 0);
-  console.log(data);
+  this.bob.getProfileKeys(settings.values.profileId, 0, (err, res)=>{
+    if(!err){
+      console.log(res);
+      console.log('    Done');
+      outerCallback();
+    }
+  });
 };
