@@ -39,7 +39,7 @@ class Verifier extends TTEntity {
   getProfileCount(user){
     const _this = this;
     return new Promise(function(resolve, reject) {
-      this.w3.callContractbyIdx(this.ProfileContract, 'getUserProfileTokenCount', user)
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'getUserProfileTokenCount', user)
       .then(data => resolve(data), reason => reject(reason));
     });
   }
@@ -47,7 +47,7 @@ class Verifier extends TTEntity {
   getProfileContractOwner(){
     const _this = this;
     return new Promise(function(resolve, reject) {
-      this.w3.callContractbyIdx(this.ProfileContract, 'owner')
+      _this.w3.callContractbyIdx(_this.ProfileContract, 'owner')
       .then(data => resolve(data), reason => reject(reason));
     });
   }
@@ -55,7 +55,7 @@ class Verifier extends TTEntity {
   getUnlockProfileReason(profileHash, requestor){
     const _this = this;
     return new Promise(function(resolve, reject) {
-      this.w3.callContractbyIdx(this.UnlockProfileContract, 'getReason', profileHash, requestor)
+      _this.w3.callContractbyIdx(_this.UnlockProfileContract, 'getReason', profileHash, requestor)
       .then(data => resolve(data), reason => reject(reason));
     });  
   }

@@ -28,7 +28,6 @@ exports.initialize = async function(){
   this.dave.updateGasPrice(gasPrice);
   this.eve.updateGasPrice(gasPrice);
   console.log('Initialize finished.');
-  
 };
 
 exports.checkBalance = async function(){
