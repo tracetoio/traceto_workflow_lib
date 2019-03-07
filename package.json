@@ -20,7 +20,7 @@
     "aws-sdk": "^2.332.0",
     "sync-request": "^6.0.0",
     "tracetoio-eth-lib": "^2.0.0",
-    "web3": "^1.0.0-beta.36"
+    "web3": "1.0.0-beta.36"
   },
   "devDependencies": {
     "chai": "^4.1.2",
