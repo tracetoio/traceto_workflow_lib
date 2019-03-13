@@ -10,6 +10,8 @@ class Verifier extends TTEntity {
     this.threshold = threshold;
     this.ProfileContract = this.w3.addContract('ProfileToken', environment.TraceToProfileToken.address, environment.TraceToProfileToken.abi);
     this.UnlockProfileContract = this.w3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);  
+    this.SPListContract = this.w3.addContract('ServiceProviderList', environment.TraceToSPList.address, environment.TraceToSPList.abi);
+    this.RMISPListContract = this.w3.addContract('RMIServiceProviderList', environment.TraceToRMISPList.address, environment.TraceToRMISPList.abi);
   }
 
   addProfile(user, profile, ipfs){
@@ -56,6 +58,22 @@ class Verifier extends TTEntity {
     const _this = this;
     return new Promise(function(resolve, reject) {
       _this.w3.callContractbyIdx(_this.UnlockProfileContract, 'getReason', profileHash, requestor)
+      .then(data => resolve(data), reason => reject(reason));
+    });  
+  }
+
+  isSP(address){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.SPListContract, 'isSP', address)
+      .then(data => resolve(data), reason => reject(reason));
+    });  
+  }
+
+  isRMISP(address){
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.w3.callContractbyIdx(_this.RMISPListContract, 'isSP', address)
       .then(data => resolve(data), reason => reject(reason));
     });  
   }
