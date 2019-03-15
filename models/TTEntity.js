@@ -9,12 +9,12 @@ class TTEntity {
       case 'local':
       case 'dev':
       case 'beta':
-        this.provider = 'wss://ropsten.infura.io/ws';
+        this.provider = 'wss://ropsten.infura.io/ws/'+process.env.INFURA_KEY;
         this.httpProvider = 'https://ropsten.infura.io/'+process.env.INFURA_KEY;
         break;
       case 'app':
       default:
-        this.provider = 'wss://mainnet.infura.io/ws';
+        this.provider = 'wss://mainnet.infura.io/ws/'+process.env.INFURA_KEY;
         this.httpProvider = 'https://mainnet.infura.io/'+process.env.INFURA_KEY;
     }
     this.priKey = priKey;
