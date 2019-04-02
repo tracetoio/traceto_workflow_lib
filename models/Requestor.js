@@ -16,157 +16,72 @@ class Requestor extends TTEntity {
     this.UnlockProfileContract = this.w3.addContract('UnlockProfile', environment.TraceToUnlockProfile.address, environment.TraceToUnlockProfile.abi);
   }
   getProfile(profileId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileContract, 'getProfile', profileId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileContract, 'getProfile', profileId);
   }
   getSPList(){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.SPListContract, 'getSPList')
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.SPListContract, 'getSPList');
   }
   getRMISPList(){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.RMISPListContract, 'getSPList')
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.RMISPListContract, 'getSPList');
   }
   topup(sp, count){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ServiceCreditContract, 'topup', _this.gasPrice*4, _this.prContract, sp, count)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ServiceCreditContract, 'topup', this.gasPrice*4, this.prContract, sp, count);
   }
   topupRMI(sp, count){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.RMIServiceCreditContract, 'topup', _this.gasPrice*4, _this.prContract, sp, count)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.RMIServiceCreditContract, 'topup', this.gasPrice*4, this.prContract, sp, count);
   }
   assignKYCToken(profile, result, decay){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'assignKYCToken', _this.gasPrice*4, profile, result, decay)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'assignKYCToken', this.gasPrice*4, profile, result, decay);
   }
   getBalance(sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getServiceBalance', sp)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getServiceBalance', sp);
   }
   getRMIBalance(sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getRMIServiceBalance',sp)
-      .then(data => resolve(data), reason => reject(reason)); 
-    });
+    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getRMIServiceBalance',sp);
   }
   setPendingForProfile(profileId, consent){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'addPending', _this.gasPrice*4, profileId, consent)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'addPending', this.gasPrice*4, profileId, consent);
   }
   setRMIPendingForProfile(profileId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'addRMIPending', _this.gasPrice*4, profileId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'addRMIPending', this.gasPrice*4, profileId);
   }
   getResultForProfile(profileId, sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getResult', profileId, sp)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getResult', profileId, sp);
   }
   getRMIResultForProfile(profileId, sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getRMIResult', profileId, sp)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getRMIResult', profileId, sp);
   }
   setFinishedForProfile(profileId, sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'setFinished', _this.gasPrice*4, profileId, sp)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'setFinished', this.gasPrice*4, profileId, sp);
   }
   setRMIFinishedForProfile(profileId, sp){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'setRMIFinished', _this.gasPrice*4, profileId, sp)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'setRMIFinished', this.gasPrice*4, profileId, sp);
   }
   setUnlockForProfile(profileId, reason){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'requestProfileKey', _this.gasPrice*4, profileId, reason)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'requestProfileKey', this.gasPrice*4, profileId, reason);
   }
   getProfileKeys(profileId, idx){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileResultContract, 'getProfileKey', profileId, idx)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileResultContract, 'getProfileKey', profileId, idx);
   }
   emitRENEWForProfile(profileId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'emitRENEW', _this.gasPrice*4, profileId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'emitRENEW', this.gasPrice*4, profileId);
   }
   emitRMIForProfile(profileId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.sendToContractbyIdx(_this.ProfileResultContract, 'emitRMI', _this.gasPrice*4, profileId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.sendToContractbyIdx(this.ProfileResultContract, 'emitRMI', this.gasPrice*4, profileId);
   }
   getResultEvents(fromBlock='latest'){
     return this.w3.getAllContractEventbyId(this.ProfileResultContract, fromBlock);
   }
   getKYCTokens(profileId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileContract, 'getProfileKYCs', profileId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileContract, 'getProfileKYCs', profileId);
   }
   getKYCTokenData(kycId){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileContract, 'getKYC', kycId)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileContract, 'getKYC', kycId);
   }
   getProfileCount(user){
-    const _this = this;
-    return new Promise(function(resolve, reject) {
-      _this.w3.callContractbyIdx(_this.ProfileContract, 'getUserProfileTokenCount', user)
-      .then(data => resolve(data), reason => reject(reason));
-    });
+    return this.w3.callContractbyIdx(this.ProfileContract, 'getUserProfileTokenCount', user);
   }
   sign(msg){
-    const _this = this;
     return this.w3.sign(msg);
   }
 }
